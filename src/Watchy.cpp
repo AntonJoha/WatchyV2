@@ -2,6 +2,7 @@
 
 DS3232RTC Watchy::RTC(false); 
 GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> Watchy::display(GxEPD2_154_D67(CS, DC, RESET, BUSY));
+tmElements_t Watchy::currentTime;
 
 RTC_DATA_ATTR int guiState;
 RTC_DATA_ATTR int menuIndex;
@@ -28,7 +29,6 @@ String getValue(String data, char separator, int index)
   return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
-Watchy::Watchy(){} //constructor
 
 void Watchy::init(String datetime){
     esp_sleep_wakeup_cause_t wakeup_reason;
@@ -942,25 +942,3 @@ void Watchy::updateFWBegin(){
     btStop();
     showMenu(menuIndex, false);
 }
-
-// time_t compileTime()
-// {   
-//     const time_t FUDGE(10);    //fudge factor to allow for upload time, etc. (seconds, YMMV)
-//     const char *compDate = __DATE__, *compTime = __TIME__, *months = "JanFebMarAprMayJunJulAugSepOctNovDec";
-//     char compMon[3], *m;
-
-//     strncpy(compMon, compDate, 3);
-//     compMon[3] = '\0';
-//     m = strstr(months, compMon);
-
-//     tmElements_t tm;
-//     tm.Month = ((m - months) / 3 + 1);
-//     tm.Day = atoi(compDate + 4);
-//     tm.Year = atoi(compDate + 7) - YEAR_OFFSET; // offset from 1970, since year is stored in uint8_t
-//     tm.Hour = atoi(compTime);
-//     tm.Minute = atoi(compTime + 3);
-//     tm.Second = atoi(compTime + 6);
-
-//     time_t t = makeTime(tm);
-//     return t + FUDGE;        //add fudge factor to allow for compile time
-// }

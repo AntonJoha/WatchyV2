@@ -19,13 +19,10 @@ typedef struct weatherData{
     int16_t weatherConditionCode;
 }weatherData;
 
-class Watchy {
-    public:
-        static DS3232RTC RTC;
-        static GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display;
-        tmElements_t currentTime;
-    public:
-        Watchy();
+namespace Watchy {
+        extern DS3232RTC RTC;
+        extern GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display;
+        extern tmElements_t currentTime;
         void init(String datetime = "");
         void deepSleep();
         float getBatteryVoltage();
@@ -43,17 +40,15 @@ class Watchy {
         bool connectWiFi();
         weatherData getWeatherData();
         void updateFWBegin();
-
         void showWatchFace(bool partialRefresh);
-        virtual void drawWatchFace(); //override this method for different watch faces
+        void drawWatchFace(); //override this method for different watch faces
 
-    private:
         void _rtcConfig(String datetime);    
         void _bmaConfig();
-        static void _configModeCallback(WiFiManager *myWiFiManager);
-        static uint16_t _readRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
-        static uint16_t _writeRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
-};
+        void _configModeCallback(WiFiManager *myWiFiManager);
+        uint16_t _readRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
+        uint16_t _writeRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
+}
 
 extern RTC_DATA_ATTR int guiState;
 extern RTC_DATA_ATTR int menuIndex;
