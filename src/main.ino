@@ -2,9 +2,7 @@
 
 
 void setup(){
-    Watchy::init();
+  Watchy::init();
 }
 
-void loop(){
-
-}
+void loop(){}

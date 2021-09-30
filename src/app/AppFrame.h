@@ -10,6 +10,7 @@ class AppFrame{
         virtual void draw(void * data) = 0;
         virtual int handleButtonPress(uint64_t wakeupBit, void * data) = 0;
         AppFrame();
+
 };
 
 

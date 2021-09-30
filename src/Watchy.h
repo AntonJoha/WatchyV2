@@ -25,9 +25,10 @@ namespace Watchy {
         extern tmElements_t currentTime;
         void init(String datetime = "");
         void deepSleep();
+        tmElements_t getTime();
         float getBatteryVoltage();
         void vibMotor(uint8_t intervalMs = 100, uint8_t length = 20);
-
+        GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT>  getDisplay();
         void handleButtonPress();
         void showMenu(byte menuIndex, bool partialRefresh);
         void showFastMenu(byte menuIndex);

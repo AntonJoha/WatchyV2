@@ -29,6 +29,16 @@ String getValue(String data, char separator, int index)
   return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
+GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> Watchy::getDisplay()
+{
+    return Watchy::display;
+}
+
+tmElements_t Watchy::getTime()
+{
+    return Watchy::currentTime;
+}
+
 
 void Watchy::init(String datetime){
     esp_sleep_wakeup_cause_t wakeup_reason;
