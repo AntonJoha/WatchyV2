@@ -33,3 +33,7 @@ void AppFrame::draw(void * data){
     display.display(false); //partial refresh
     display.hibernate();
 }
+
+int AppFrame::run() {return APP_STATE;}
+
+bool AppFrame::runnable() {return false;}

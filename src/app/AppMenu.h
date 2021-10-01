@@ -2,7 +2,7 @@
 #define MENU_H
 #include "AppFrame.h"
 
-extern RTC_DATA_ATTR uint8_t position;
+extern RTC_DATA_ATTR byte position;
 
 typedef struct MenuList{
     struct MenuList* next;
@@ -16,10 +16,9 @@ class AppMenu{
         int handleButtonPress(uint64_t wakeupBit, void * data);
         AppMenu();
         ~AppMenu();
-        void addItem(char * name, AppFrame*(*factory)(void));
+        void addApp(char * name, AppFrame*(*factory)(void));
     private:
         MenuList* head;
-
 };
 
 
