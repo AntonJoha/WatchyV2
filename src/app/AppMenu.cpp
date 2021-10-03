@@ -16,7 +16,15 @@ byte menuLenght(MenuList *head)
     return value;
 }
 
-AppMenu::AppMenu() {};
+MenuList * getPos(unsigned int pos, MenuList* head)
+{
+    MenuList * toReturn = head;
+    for (unsigned int i = 0; i < pos && toReturn != nullptr; ++i) return toReturn;
+}
+
+AppMenu::AppMenu() {
+    head = nullptr;
+}
 
 AppMenu::~AppMenu()
 {
@@ -40,6 +48,18 @@ AppMenu::~AppMenu()
 void AppMenu::draw(void * data){
     auto display = Watchy::getDisplay();
 
+    display.init(0, false);
+    display.setFullWindow();
+    display. fillScreen(GxEPD_BLACK);
+    display.setFont(&FreeMonoBold9pt7b);
+
+    int16_t x1, y1;
+    uint16_t w, h;
+
+    byte len = menuLenght(head);
+
+
+    /*
     display.init(0, false); //_initial_refresh to false to prevent full update on init
     display.setFullWindow();
     display.fillScreen(GxEPD_BLACK);
@@ -48,7 +68,6 @@ void AppMenu::draw(void * data){
     int16_t  x1, y1;
     uint16_t w, h;
     int16_t yPos;
-
     const char *menuItems[] = {"Check Baaattery", "Vibrate Motor", "Show Accelerometer", "Set Time", "Setup WiFi", "Update Firmware"};
     for(int i=0; i<MENU_LENGTH; i++){
         yPos = 30+(MENU_HEIGHT*i);
@@ -64,7 +83,7 @@ void AppMenu::draw(void * data){
             display.println(menuItems[i]);
         }   
     }
-
+    */
     display.display(false);
     display.hibernate();
 
