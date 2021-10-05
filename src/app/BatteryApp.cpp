@@ -31,6 +31,9 @@ int BatteryApp::handleButtonPress(uint64_t wakeupBit, void* data)
 
 BatteryApp::BatteryApp() {}
 
-int BatteryApp::run() {return APP_STATE;}
+int BatteryApp::run() {
+    draw(nullptr);
+    return MAIN_MENU_STATE;
+}
 
 bool BatteryApp::runnable() {return false;}

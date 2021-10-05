@@ -52,7 +52,7 @@ tmElements_t Watchy::getTime()
 }
 
 
-void Watchy::addApp(char * name, AppFrame* (*factory)(void))
+void Watchy::addApp(const char * name, AppFrame* (*factory)(void))
 {
     menu.addApp(name, factory);
 }
@@ -146,6 +146,13 @@ void Watchy::handleButtonPress(){
     if (guiState == MAIN_MENU_STATE){
         guiState = menu.handleButtonPress(wakeupBit, nullptr);
         if (guiState == WATCHFACE_STATE) showWatchFace(false);
+        else if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false)
+        return;
+    }
+    else if (guiState == APP_STATE)
+    {
+        guiState = menu.handleButtonPress(wakeupBit, nullptr);
+        if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false);
         return;
     }
   if (wakeupBit & MENU_BTN_MASK){

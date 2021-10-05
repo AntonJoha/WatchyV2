@@ -11,14 +11,16 @@ typedef struct MenuList{
 }MenuList;
 
 class AppMenu{
-    public: 
+    public:
         void draw(void * data);
         int handleButtonPress(uint64_t wakeupBit, void * data);
         AppMenu();
         ~AppMenu();
-        void addApp(char * name, AppFrame*(*factory)(void));
-    private:
+        void addApp(const char * name, AppFrame*(*factory)(void));
+        int apphandleButtonPress(uint64_t wakeupBit, void * data);
+        void appDraw(void * data);
         MenuList* head;
+        AppFrame* frame;
 };
 
 

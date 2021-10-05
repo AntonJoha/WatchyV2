@@ -2,7 +2,7 @@
 #define SET_TIME_APP_H
 #include "../Watchy.h"
 
-class SetTime : AppFrame{
+class SetTime : public AppFrame{
 
     public:
         SetTime();

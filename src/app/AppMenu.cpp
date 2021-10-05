@@ -4,9 +4,9 @@
 
 RTC_DATA_ATTR byte position;
 
+
 byte menuLenght(MenuList *head)
 {
-    return 6;
     byte value = 0;
     while(head != nullptr)
     {
@@ -19,7 +19,9 @@ byte menuLenght(MenuList *head)
 MenuList * getPos(unsigned int pos, MenuList* head)
 {
     MenuList * toReturn = head;
-    for (unsigned int i = 0; i < pos && toReturn != nullptr; ++i) return toReturn;
+    for (unsigned int i = 0; i < pos && toReturn != nullptr; ++i)
+        toReturn = toReturn->next;
+    return toReturn;
 }
 
 AppMenu::AppMenu() {
@@ -50,15 +52,38 @@ void AppMenu::draw(void * data){
 
     display.init(0, false);
     display.setFullWindow();
-    display. fillScreen(GxEPD_BLACK);
+    display.fillScreen(GxEPD_BLACK);
     display.setFont(&FreeMonoBold9pt7b);
 
     int16_t x1, y1;
     uint16_t w, h;
 
-    byte len = menuLenght(head);
+    byte page = position/6;
+    byte relativePos = position%6;
+
+    int16_t ypos;
+    MenuList* current = getPos(page*6, head);   
 
 
+    for (int i = 0; i < MENU_LENGTH && current != nullptr; ++i)
+    {
+        ypos = 30+(MENU_HEIGHT*i);
+        display.setCursor(0, ypos);
+        if (i == relativePos)
+        {
+            display.getTextBounds(current->name, 0, ypos, &x1, &y1, &w, &h);
+            display.fillRect(x1-1, y1-10, 200, h+15, GxEPD_WHITE);
+            display.setTextColor(GxEPD_BLACK);
+            display.println(current->name);
+        }
+        else
+        {
+            display.setTextColor(GxEPD_WHITE);
+            display.println(current->name);
+        }
+        current = current->next;
+    }
+    
     /*
     display.init(0, false); //_initial_refresh to false to prevent full update on init
     display.setFullWindow();
@@ -93,29 +118,11 @@ int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
 {
     if (wakeupBit & MENU_BTN_MASK)
     {
-        switch(position)
-        {
-            case 0:
-                Watchy::showBattery();
-                break;
-            case 1:
-                Watchy::showBuzz();
-                break;          
-            case 2:
-                Watchy::showAccelerometer();
-                break;
-            case 3:
-                Watchy::setTime();
-                break;
-            case 4:
-                Watchy::setupWifi();
-                break;                    
-            case 5:
-                Watchy::showUpdateFW();
-                break;
-            default:
-                break;                              
-        }
+        MenuList * item = getPos(position, head);
+        AppFrame *frame = item->factory();
+        if (frame->runnable() == true)
+        return frame->run();
+        return APP_STATE;
     }
     else if (wakeupBit & BACK_BTN_MASK)
     {
@@ -125,6 +132,7 @@ int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
     {
         position--;
         if (position < 0) position = menuLenght(head) - 1;
+        if (position < 0) position = 0;
         draw(data);
     }
     else if (wakeupBit & DOWN_BTN_MASK)
@@ -149,7 +157,7 @@ MenuList * assignMenuList(char *s , AppFrame*(*factory)(void))
     return toReturn;
 }
 
-void AppMenu::addApp(char * s, AppFrame*(*factory)(void))
+void AppMenu::addApp(const char * s, AppFrame*(*factory)(void))
 {
    MenuList* h = head;
    size_t len = strlen(s);
@@ -164,4 +172,17 @@ void AppMenu::addApp(char * s, AppFrame*(*factory)(void))
         while (h->next != nullptr) h = h->next;
         h->next = assignMenuList(name, factory);
    }
+}
+
+
+void AppMenu::appDraw(void * data)
+{
+    MenuList* item = getPos(position, head);
+    frame = item->factory();
+    frame->draw(data);
+}
+
+int AppMenu::apphandleButtonPress(uint64_t wakeupBit, void* data)
+{
+    return frame->handleButtonPress(wakeupBit, data);
 }

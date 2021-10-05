@@ -47,7 +47,7 @@ namespace Watchy {
         void showWatchFace(bool partialRefresh);
         void drawWatchFace(); //override this method for different watch faces
 
-        void addApp(char* name, AppFrame* (*factory)(void));
+        void addApp(const char* name, AppFrame* (*factory)(void));
 
         void _rtcConfig(String datetime);    
         void _bmaConfig();
