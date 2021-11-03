@@ -26,6 +26,7 @@ MenuList * getPos(unsigned int pos, MenuList* head)
 
 AppMenu::AppMenu() {
     head = nullptr;
+    frame = nullptr;
 }
 
 AppMenu::~AppMenu()

@@ -15,7 +15,6 @@
 #include "config.h"    
 #include "app/AppFrame.h"
 
-
 typedef struct weatherData{
     int8_t temperature;
     int16_t weatherConditionCode;
@@ -35,17 +34,13 @@ namespace Watchy {
         void handleButtonPress();
         void showMenu(byte menuIndex, bool partialRefresh);
         void showFastMenu(byte menuIndex);
-        void showAccelerometer();
-        void showUpdateFW();
-        void setTime();
-        void setupWifi();
         weatherData getWeatherData();
-        void updateFWBegin();
         void showWatchFace(bool partialRefresh);
         void drawWatchFace(); //override this method for different watch faces
-
+        bool connectWiFi();
         void addApp(const char* name, AppFrame* (*factory)(void));
-
+        
+        
         void _rtcConfig(String datetime);    
         void _bmaConfig();
         void _configModeCallback(WiFiManager *myWiFiManager);
@@ -57,5 +52,5 @@ extern RTC_DATA_ATTR int guiState;
 extern RTC_DATA_ATTR BMA423 sensor;
 extern RTC_DATA_ATTR bool WIFI_CONFIGURED;
 extern RTC_DATA_ATTR bool BLE_CONFIGURED;
-
+extern RTC_DATA_ATTR byte data[DATASIZE];
 #endif
