@@ -35,13 +35,10 @@ namespace Watchy {
         void handleButtonPress();
         void showMenu(byte menuIndex, bool partialRefresh);
         void showFastMenu(byte menuIndex);
-        void showBattery();
-        void showBuzz();
         void showAccelerometer();
         void showUpdateFW();
         void setTime();
         void setupWifi();
-        bool connectWiFi();
         weatherData getWeatherData();
         void updateFWBegin();
         void showWatchFace(bool partialRefresh);

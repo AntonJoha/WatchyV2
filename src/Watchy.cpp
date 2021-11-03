@@ -146,7 +146,7 @@ void Watchy::handleButtonPress(){
     if (guiState == MAIN_MENU_STATE){
         guiState = menu.handleButtonPress(wakeupBit, nullptr);
         if (guiState == WATCHFACE_STATE) showWatchFace(false);
-        else if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false)
+        else if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false);
         return;
     }
     else if (guiState == APP_STATE)
@@ -266,17 +266,7 @@ void Watchy::showBattery(){
 }
 
 void Watchy::showBuzz(){
-    display.init(0, false); //_initial_refresh to false to prevent full update on init
-    display.setFullWindow();
-    display.fillScreen(GxEPD_BLACK);
-    display.setFont(&FreeMonoBold9pt7b);
-    display.setTextColor(GxEPD_WHITE);
-    display.setCursor(70, 80);
-    display.println("Buzz!");
-    display.display(false); //full refresh
-    display.hibernate();
-    vibMotor();
-    showMenu(menuIndex, false);    
+       
 }
 
 void Watchy::vibMotor(uint8_t intervalMs, uint8_t length){
