@@ -10,7 +10,6 @@ tmElements_t Watchy::currentTime;
 AppMenu menu;
 BatteryApp app;
 
-
 RTC_DATA_ATTR int guiState;
 RTC_DATA_ATTR int menuIndex;
 RTC_DATA_ATTR BMA423 sensor;
@@ -20,6 +19,7 @@ RTC_DATA_ATTR weatherData currentWeather;
 RTC_DATA_ATTR int weatherIntervalCounter = WEATHER_UPDATE_INTERVAL;
 RTC_DATA_ATTR byte data[DATASIZE];
 
+/*
 String getValue(String data, char separator, int index)
 {
   int found = 0;
@@ -35,6 +35,33 @@ String getValue(String data, char separator, int index)
   }
 
   return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
+*/
+
+
+String getValue(String data, char seperator, int index){
+    
+    int pos = 0;
+    int length = data.length();
+
+    while (pos < length && index != 0)
+    {
+        if (data[pos] == seperator)
+        {
+            index--;
+        }
+        pos++;
+    }
+    if (pos >= length) return "";
+
+    String toReturn = "";
+    
+    while(pos < length){
+        if (data[pos] == seperator) break;
+        toReturn += data[pos];
+        ++pos;
+    }
+    return toReturn;
 }
 
 DS3232RTC Watchy::getRTC()
@@ -60,7 +87,7 @@ void Watchy::addApp(const char * name, AppFrame* (*factory)(void))
 
 void draw(){
     if(guiState == WATCHFACE_STATE){
-        showWatchFace(true); //partial updates on tick
+        Watchy::showWatchFace(true); //partial updates on tick
     }
     else if (guiState == APP_STATE)
     {
@@ -153,22 +180,20 @@ void Watchy::handleButtonPress(){
 
     if (guiState == MAIN_MENU_STATE){
         guiState = menu.handleButtonPress(wakeupBit, data);
-        if (guiState == WATCHFACE_STATE) showWatchFace(false);
-        else if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false);
-        return;
+        if (guiState == WATCHFACE_STATE) {showWatchFace(false);}
+        else if (guiState == MAIN_MENU_STATE) {showMenu(menuIndex, false);}
     }
     else if (guiState == APP_STATE)
     {
         guiState = menu.handleButtonPress(wakeupBit, data);
-        if (guiState == MAIN_MENU_STATE) showMenu(menuIndex, false);
-        return;
+        if (guiState == MAIN_MENU_STATE) {showMenu(menuIndex, false);}
     }
-  if (wakeupBit & MENU_BTN_MASK){
-    if(guiState == WATCHFACE_STATE){//enter menu state if coming from watch face
-        showMenu(menuIndex, false);
-        return;
+    else if(guiState == WATCHFACE_STATE){//enter menu state if coming from watch face
+        if (wakeupBit & MAIN_MENU_STATE)
+        {
+            showMenu(menuIndex, false);
+        }
     }
-  }
 
   display.hibernate();    
 }
@@ -216,7 +241,15 @@ weatherData Watchy::getWeatherData(){
         if(connectWiFi()){//Use Weather API for live data if WiFi is connected
             HTTPClient http;
             http.setConnectTimeout(3000);//3 second max timeout
-            String weatherQueryURL = String(OPENWEATHERMAP_URL) + String(CITY_NAME) + String(",") + String(COUNTRY_CODE) + String("&units=") + String(TEMP_UNIT) + String("&appid=") + String(OPENWEATHERMAP_APIKEY);
+            String weatherQueryURL = String(OPENWEATHERMAP_URL) + 
+                String(CITY_NAME) + 
+                String(",") + 
+                String(COUNTRY_CODE) + 
+                String("&units=") + 
+                String(TEMP_UNIT) + 
+                String("&appid=") + 
+                String(OPENWEATHERMAP_APIKEY);
+
             http.begin(weatherQueryURL.c_str());
             int httpResponseCode = http.GET();
             if(httpResponseCode == 200) {

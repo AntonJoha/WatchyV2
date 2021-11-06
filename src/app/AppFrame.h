@@ -1,7 +1,7 @@
 #ifndef APP_FRAME_H
 #define APP_FRAME_H
 #include <Arduino.h>
-#define DATASIZE 2048
+
 #include "../config.h"
 
 class AppFrame{

@@ -57,6 +57,6 @@
 #define HARDWARE_VERSION_MAJOR 1
 #define HARDWARE_VERSION_MINOR 0
 
-
+#define DATASIZE 2048
 
 #endif
