@@ -1,6 +1,6 @@
-#ifndef BASIC_FACE.h
-#define BASIC_FACE.h
-
+#ifndef BASIC_FACE_h
+#define BASIC_FACE_h
+#include "FaceFrame.h"
 
 class BasicFace : public FaceFrame{
     public:

@@ -2,6 +2,8 @@
 #include "app/SetTimeApp.h"
 #include "app/BatteryApp.h"
 #include "app/AppShowBuzz.h"
+#include "watchface/BasicFace.h"
+
 
 AppFrame* setTimeFactory()
 {
@@ -24,6 +26,7 @@ void setup(){
   {
     addFrames();
   }
+  Watchy::setFace(new BasicFace);
   Watchy::init();
 }
 

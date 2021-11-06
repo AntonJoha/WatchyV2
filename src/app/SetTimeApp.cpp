@@ -20,7 +20,7 @@ int SetTime::run()
     tmElements_t currentTime;
 
 
-    RTC.read(currentTime);
+    RTC->read(currentTime);
 
     int8_t minute = currentTime.Minute;
     int8_t hour = currentTime.Hour;
@@ -37,8 +37,8 @@ int SetTime::run()
     pinMode(MENU_BTN_PIN, INPUT);  
     pinMode(BACK_BTN_PIN, INPUT);  
 
-    display.init(0, true); //_initial_refresh to false to prevent full update on init
-    display.setFullWindow();
+    display->init(0, true); //_initial_refresh to false to prevent full update on init
+    display->setFullWindow();
 
     while(1){
 
@@ -102,65 +102,65 @@ int SetTime::run()
         }   
     }    
 
-    display.fillScreen(GxEPD_BLACK);
-    display.setTextColor(GxEPD_WHITE);
-    display.setFont(&DSEG7_Classic_Bold_53);
+    display->fillScreen(GxEPD_BLACK);
+    display->setTextColor(GxEPD_WHITE);
+    display->setFont(&DSEG7_Classic_Bold_53);
 
-    display.setCursor(5, 80);
+    display->setCursor(5, 80);
     if(setIndex == SET_HOUR){//blink hour digits
-        display.setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
+        display->setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
     }
     if(hour < 10){
-        display.print("0");      
+        display->print("0");      
     }
-    display.print(hour);
+    display->print(hour);
 
-    display.setTextColor(GxEPD_WHITE);
-    display.print(":");
+    display->setTextColor(GxEPD_WHITE);
+    display->print(":");
 
-    display.setCursor(108, 80);
+    display->setCursor(108, 80);
     if(setIndex == SET_MINUTE){//blink minute digits
-        display.setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
+        display->setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
     }
     if(minute < 10){
-        display.print("0");      
+        display->print("0");      
     }
-    display.print(minute);
+    display->print(minute);
 
-    display.setTextColor(GxEPD_WHITE);
+    display->setTextColor(GxEPD_WHITE);
 
-    display.setFont(&FreeMonoBold9pt7b);
-    display.setCursor(45, 150);
+    display->setFont(&FreeMonoBold9pt7b);
+    display->setCursor(45, 150);
     if(setIndex == SET_YEAR){//blink minute digits
-        display.setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
+        display->setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
     }    
-    display.print(2000+year);
+    display->print(2000+year);
 
-    display.setTextColor(GxEPD_WHITE);
-    display.print("/");
+    display->setTextColor(GxEPD_WHITE);
+    display->print("/");
 
     if(setIndex == SET_MONTH){//blink minute digits
-        display.setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
+        display->setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
     }   
     if(month < 10){
-        display.print("0");      
+        display->print("0");      
     }     
-    display.print(month);
+    display->print(month);
 
-    display.setTextColor(GxEPD_WHITE);
-    display.print("/");
+    display->setTextColor(GxEPD_WHITE);
+    display->print("/");
 
     if(setIndex == SET_DAY){//blink minute digits
-        display.setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
+        display->setTextColor(blink ? GxEPD_WHITE : GxEPD_BLACK);
     }       
     if(day < 10){
-        display.print("0");      
+        display->print("0");      
     }     
-    display.print(day); 
-    display.display(true); //partial refresh
+    display->print(day); 
+    display->display(true); //partial refresh
     }
 
-    display.hibernate();
+    display->hibernate();
 
     const time_t FUDGE(10);//fudge factor to allow for upload time, etc. (seconds, YMMV)
     tmElements_t tm;
@@ -172,7 +172,7 @@ int SetTime::run()
     tm.Second = 0;
 
     time_t t = makeTime(tm) + FUDGE;
-    RTC.set(t);
+    RTC->set(t);
 
     return MAIN_MENU_STATE;
 }

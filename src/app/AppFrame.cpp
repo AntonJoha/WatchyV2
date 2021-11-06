@@ -15,23 +15,23 @@ void AppFrame::draw(void * data){
     auto display = Watchy::getDisplay();
     auto currentTime = Watchy::getTime();
     
-    display.init(0, false); //_initial_refresh to false to prevent full update on init
-    display.setFullWindow();
+    display->init(0, false); //_initial_refresh to false to prevent full update on init
+    display->setFullWindow();
     
-    display.setFont(&DSEG7_Classic_Bold_53);
-    display.setCursor(5, 53+60);
+    display->setFont(&DSEG7_Classic_Bold_53);
+    display->setCursor(5, 53+60);
     if(currentTime.Hour < 10){
-        display.print("0");
+        display->print("0");
     }
-    display.print(currentTime.Hour);
-    display.print(":");
+    display->print(currentTime.Hour);
+    display->print(":");
     if(currentTime.Minute < 10){
-        display.print("0");
+        display->print("0");
     }  
-    display.println(currentTime.Minute); 
+    display->println(currentTime.Minute); 
 
-    display.display(false); //partial refresh
-    display.hibernate();
+    display->display(false); //partial refresh
+    display->hibernate();
 }
 
 int AppFrame::run() {return APP_STATE;}

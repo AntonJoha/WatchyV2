@@ -9,6 +9,7 @@ GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> Watchy::display(GxEPD2_154_D67
 tmElements_t Watchy::currentTime;
 AppMenu menu;
 BatteryApp app;
+FaceFrame* face;
 
 RTC_DATA_ATTR int guiState;
 RTC_DATA_ATTR int menuIndex;
@@ -64,14 +65,14 @@ String getValue(String data, char seperator, int index){
     return toReturn;
 }
 
-DS3232RTC Watchy::getRTC()
+DS3232RTC* Watchy::getRTC()
 {
-    return Watchy::RTC;
+    return &Watchy::RTC;
 }
 
-GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> Watchy::getDisplay()
+GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT>* Watchy::getDisplay()
 {
-    return Watchy::display;
+    return &Watchy::display;
 }
 
 tmElements_t Watchy::getTime()
@@ -93,6 +94,10 @@ void draw(){
     {
         menu.appDraw(data);
     }
+}
+
+void Watchy::setFace(FaceFrame * value){
+    face = value;
 }
 
 void Watchy::init(String datetime){

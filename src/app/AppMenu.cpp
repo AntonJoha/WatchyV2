@@ -51,10 +51,10 @@ AppMenu::~AppMenu()
 void AppMenu::draw(void * data){
     auto display = Watchy::getDisplay();
 
-    display.init(0, false);
-    display.setFullWindow();
-    display.fillScreen(GxEPD_BLACK);
-    display.setFont(&FreeMonoBold9pt7b);
+    display->init(0, false);
+    display->setFullWindow();
+    display->fillScreen(GxEPD_BLACK);
+    display->setFont(&FreeMonoBold9pt7b);
 
     int16_t x1, y1;
     uint16_t w, h;
@@ -69,18 +69,18 @@ void AppMenu::draw(void * data){
     for (int i = 0; i < MENU_LENGTH && current != nullptr; ++i)
     {
         ypos = 30+(MENU_HEIGHT*i);
-        display.setCursor(0, ypos);
+        display->setCursor(0, ypos);
         if (i == relativePos)
         {
-            display.getTextBounds(current->name, 0, ypos, &x1, &y1, &w, &h);
-            display.fillRect(x1-1, y1-10, 200, h+15, GxEPD_WHITE);
-            display.setTextColor(GxEPD_BLACK);
-            display.println(current->name);
+            display->getTextBounds(current->name, 0, ypos, &x1, &y1, &w, &h);
+            display->fillRect(x1-1, y1-10, 200, h+15, GxEPD_WHITE);
+            display->setTextColor(GxEPD_BLACK);
+            display->println(current->name);
         }
         else
         {
-            display.setTextColor(GxEPD_WHITE);
-            display.println(current->name);
+            display->setTextColor(GxEPD_WHITE);
+            display->println(current->name);
         }
         current = current->next;
     }
@@ -110,8 +110,8 @@ void AppMenu::draw(void * data){
         }   
     }
     */
-    display.display(false);
-    display.hibernate();
+    display->display(false);
+    display->hibernate();
 
 }
 
