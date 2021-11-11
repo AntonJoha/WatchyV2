@@ -85,45 +85,57 @@ void AppMenu::draw(void * data){
         current = current->next;
     }
     
-    /*
-    display.init(0, false); //_initial_refresh to false to prevent full update on init
-    display.setFullWindow();
-    display.fillScreen(GxEPD_BLACK);
-    display.setFont(&FreeMonoBold9pt7b);
-
-    int16_t  x1, y1;
-    uint16_t w, h;
-    int16_t yPos;
-    const char *menuItems[] = {"Check Baaattery", "Vibrate Motor", "Show Accelerometer", "Set Time", "Setup WiFi", "Update Firmware"};
-    for(int i=0; i<MENU_LENGTH; i++){
-        yPos = 30+(MENU_HEIGHT*i);
-        display.setCursor(0, yPos);
-        if(i == position){
-            display.getTextBounds(menuItems[i], 0, yPos, &x1, &y1, &w, &h);
-            display.fillRect(x1-1, y1-10, 200, h+15, GxEPD_WHITE);
-            display.setTextColor(GxEPD_BLACK);
-            display.println(menuItems[i]);      
-        }
-        else{
-            display.setTextColor(GxEPD_WHITE);
-            display.println(menuItems[i]);
-        }   
-    }
-    */
-    display->display(false);
+    display->display(true);
     display->hibernate();
 
+}
+
+int AppMenu::fastMenu(void * data){
+
+    draw(data);
+
+    long lastTimeout = millis();
+    
+    pinMode(MENU_BTN_PIN, INPUT);
+    pinMode(BACK_BTN_PIN, INPUT);
+    pinMode(UP_BTN_PIN, INPUT);
+    pinMode(DOWN_BTN_PIN, INPUT);
+
+    while(true){
+        //If it has been inactive for too long
+        if(millis() - lastTimeout > 5000)
+        {
+            break;
+        }
+        
+        if (digitalRead(MENU_BTN_PIN) == 1)
+        {
+            return menuButton();
+        }
+        else if (digitalRead(BACK_BTN_PIN) == 1){
+            return WATCHFACE_STATE;
+        }
+        else if (digitalRead(UP_BTN_PIN) == 1){
+            upButton();
+            lastTimeout = millis();
+            draw(data);
+        }
+        else if (digitalRead(DOWN_BTN_PIN) == 1){
+            downButton();
+            lastTimeout = millis();
+            draw(data);
+        }
+
+    }
+
+    return MAIN_MENU_STATE;
 }
 
 int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
 {
     if (wakeupBit & MENU_BTN_MASK)
     {
-        MenuList * item = getPos(position, head);
-        AppFrame *frame = item->factory();
-        if (frame->runnable() == true)
-        return frame->run();
-        return APP_STATE;
+        return menuButton();
     }
     else if (wakeupBit & BACK_BTN_MASK)
     {
@@ -131,21 +143,35 @@ int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
     }
     else if (wakeupBit & UP_BTN_MASK)
     {
-        position--;
-        if (position < 0) position = menuLenght(head) - 1;
-        if (position < 0) position = 0;
-        draw(data);
+        upButton();
     }
     else if (wakeupBit & DOWN_BTN_MASK)
     {
-        position++;
-        if (position >= menuLenght(head)) position = 0;
-        draw(data);
+        downButton();
     }
 
-    //TODO MAKE A NEW FAST MENU
 
-    return MAIN_MENU_STATE;
+    return fastMenu(data);
+}
+
+void AppMenu::upButton(){
+    
+    position--;
+    if (position > menuLenght(head)) position = menuLenght(head) - 1;
+}
+
+void AppMenu::downButton(){
+    
+    position++;
+    if (position >= menuLenght(head)) position = 0;
+}
+
+int AppMenu::menuButton(){
+    MenuList * item = getPos(position, head);
+    AppFrame *frame = item->factory();
+    if (frame->runnable() == true)
+        return frame->run();
+    return APP_STATE;
 }
 
 MenuList * assignMenuList(char *s , AppFrame*(*factory)(void))

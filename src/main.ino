@@ -2,7 +2,7 @@
 #include "app/SetTimeApp.h"
 #include "app/BatteryApp.h"
 #include "app/AppShowBuzz.h"
-#include "watchface/BasicFace.h"
+#include "watchface/CircleFace.h"
 
 
 AppFrame* setTimeFactory()
@@ -22,11 +22,10 @@ void addFrames()
 
 
 void setup(){
-  for (int i = 0; i < 10; ++i)
-  {
-    addFrames();
-  }
-  Watchy::setFace(new BasicFace);
+  
+  addFrames();
+  Watchy::setFace(new CircleFace);
+  
   Watchy::init();
 }
 

@@ -21,6 +21,13 @@ class AppMenu{
         void appDraw(void * data);
         MenuList* head;
         AppFrame* frame;
+
+    private:
+        int fastMenu(void *);
+        int menuButton();
+        void downButton();
+        void upButton();
+
 };
 
 

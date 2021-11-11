@@ -40,7 +40,7 @@ namespace Watchy {
         void drawWatchFace(); //override this method for different watch faces
         bool connectWiFi();
         void addApp(const char* name, AppFrame* (*factory)(void));
-        
+
         void setFace(FaceFrame * frame);
         void _rtcConfig(String datetime);    
         void _bmaConfig();

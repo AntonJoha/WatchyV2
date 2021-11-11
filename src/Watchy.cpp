@@ -20,26 +20,6 @@ RTC_DATA_ATTR weatherData currentWeather;
 RTC_DATA_ATTR int weatherIntervalCounter = WEATHER_UPDATE_INTERVAL;
 RTC_DATA_ATTR byte data[DATASIZE];
 
-/*
-String getValue(String data, char separator, int index)
-{
-  int found = 0;
-  int strIndex[] = {0, -1};
-  int maxIndex = data.length()-1;
-
-  for(int i=0; i<=maxIndex && found<=index; i++){
-    if(data.charAt(i)==separator || i==maxIndex){
-        found++;
-        strIndex[0] = strIndex[1]+1;
-        strIndex[1] = (i == maxIndex) ? i+1 : i;
-    }
-  }
-
-  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
-}
-*/
-
-
 String getValue(String data, char seperator, int index){
     
     int pos = 0;
@@ -77,7 +57,8 @@ GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT>* Watchy::getDisplay()
 
 tmElements_t Watchy::getTime()
 {
-    return Watchy::currentTime;
+Watchy::RTC.read(currentTime);
+    return currentTime;
 }
 
 
@@ -93,6 +74,10 @@ void draw(){
     else if (guiState == APP_STATE)
     {
         menu.appDraw(data);
+    }
+    else if (guiState == MAIN_MENU_STATE)
+    {
+        Watchy::showMenu(menuIndex, false);
     }
 }
 
@@ -194,7 +179,8 @@ void Watchy::handleButtonPress(){
         if (guiState == MAIN_MENU_STATE) {showMenu(menuIndex, false);}
     }
     else if(guiState == WATCHFACE_STATE){//enter menu state if coming from watch face
-        if (wakeupBit & MAIN_MENU_STATE)
+        guiState = face->handleButtonPress(wakeupBit, data);
+        if (guiState == MAIN_MENU_STATE)
         {
             showMenu(menuIndex, false);
         }
@@ -228,17 +214,7 @@ void Watchy::showWatchFace(bool partialRefresh){
 }
 
 void Watchy::drawWatchFace(){
-    display.setFont(&DSEG7_Classic_Bold_53);
-    display.setCursor(5, 53+60);
-    if(currentTime.Hour < 10){
-        display.print("0");
-    }
-    display.print(currentTime.Hour);
-    display.print(":");
-    if(currentTime.Minute < 10){
-        display.print("0");
-    }  
-    display.println(currentTime.Minute);    
+    face->draw(data);  
 }
 
 weatherData Watchy::getWeatherData(){
