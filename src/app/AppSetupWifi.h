@@ -5,8 +5,8 @@
 class SetupWifi : public AppFrame{
 
     public:
-        int handleButtonPress(uint64_t wakeupBit, void * data);
-        void draw(void * data);
+        int handleButtonPress(uint64_t wakeupBit);
+        void draw();
         bool runnable();
         int run();
 };

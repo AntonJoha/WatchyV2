@@ -4,13 +4,13 @@
 
 AppFrame::AppFrame() {};
 
-int AppFrame::handleButtonPress(uint64_t wakeupBit, void * data)
+int AppFrame::handleButtonPress(uint64_t wakeupBit)
 {
     if (wakeupBit & BACK_BTN_MASK) return MAIN_MENU_STATE;
     else return APP_STATE;
 }
 
-void AppFrame::draw(void * data){
+void AppFrame::draw(){
 
     auto display = Watchy::getDisplay();
     auto currentTime = Watchy::getTime();

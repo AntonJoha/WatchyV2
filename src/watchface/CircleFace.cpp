@@ -124,7 +124,7 @@ struct vertices getClockVertices(double angle, double outerRadius, double innerR
 
 
 
-void CircleFace::draw(void* data)
+void CircleFace::draw()
 {
     auto display = Watchy::getDisplay();
     auto currentTime = Watchy::getTime();

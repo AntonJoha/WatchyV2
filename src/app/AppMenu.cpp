@@ -48,7 +48,7 @@ AppMenu::~AppMenu()
 }
 
 
-void AppMenu::draw(void * data){
+void AppMenu::draw(){
     auto display = Watchy::getDisplay();
 
     display->init(0, false);
@@ -90,9 +90,9 @@ void AppMenu::draw(void * data){
 
 }
 
-int AppMenu::fastMenu(void * data){
+int AppMenu::fastMenu(){
 
-    draw(data);
+    draw();
 
     long lastTimeout = millis();
     
@@ -118,12 +118,12 @@ int AppMenu::fastMenu(void * data){
         else if (digitalRead(UP_BTN_PIN) == 1){
             upButton();
             lastTimeout = millis();
-            draw(data);
+            draw();
         }
         else if (digitalRead(DOWN_BTN_PIN) == 1){
             downButton();
             lastTimeout = millis();
-            draw(data);
+            draw();
         }
 
     }
@@ -131,7 +131,7 @@ int AppMenu::fastMenu(void * data){
     return MAIN_MENU_STATE;
 }
 
-int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
+int AppMenu::handleButtonPress(uint64_t wakeupBit)
 {
     if (wakeupBit & MENU_BTN_MASK)
     {
@@ -151,7 +151,7 @@ int AppMenu::handleButtonPress(uint64_t wakeupBit, void * data)
     }
 
 
-    return fastMenu(data);
+    return fastMenu();
 }
 
 void AppMenu::upButton(){
@@ -202,14 +202,14 @@ void AppMenu::addApp(const char * s, AppFrame*(*factory)(void))
 }
 
 
-void AppMenu::appDraw(void * data)
+void AppMenu::appDraw()
 {
     MenuList* item = getPos(position, head);
     frame = item->factory();
-    frame->draw(data);
+    frame->draw();
 }
 
-int AppMenu::apphandleButtonPress(uint64_t wakeupBit, void* data)
+int AppMenu::apphandleButtonPress(uint64_t wakeupBit)
 {
-    return frame->handleButtonPress(wakeupBit, data);
+    return frame->handleButtonPress(wakeupBit);
 }

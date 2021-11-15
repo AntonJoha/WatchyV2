@@ -2,7 +2,7 @@
 #include "../Watchy.h"
 
 
-void BasicFace::draw(void * data){
+void BasicFace::draw(){
     auto display = Watchy::getDisplay();
     tmElements_t currentTime = Watchy::getTime();
 
@@ -18,6 +18,6 @@ void BasicFace::draw(void * data){
         display->print("0");
     }  
     display->println(currentTime.Minute);
-
 }
+
 

@@ -2,12 +2,12 @@
 #include "../Watchy.h"
 
 
-void ShowBuzz::draw(void * data)
+void ShowBuzz::draw()
 {
     return;
 }
 
-int ShowBuzz::handleButtonPress(uint64_t wakeupBit, void* data)
+int ShowBuzz::handleButtonPress(uint64_t wakeupBit)
 {
     return MAIN_MENU_STATE;
 } 

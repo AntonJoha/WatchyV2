@@ -8,8 +8,8 @@ class SetTime : public AppFrame{
         SetTime();
         bool runnable() {return true;};
         int run();
-        void draw(void* data);
-        int handleButtonPress(uint64_t wakeupBit, void* data);
+        void draw();
+        int handleButtonPress(uint64_t wakeupBit);
 };
 
 #endif

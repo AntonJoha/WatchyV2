@@ -5,8 +5,8 @@
 
 class ShowBuzz: public AppFrame{
     public:
-        void draw(void * data);
-        int handleButtonPress(uint64_t wakeupBit, void * data);
+        void draw();
+        int handleButtonPress(uint64_t wakeupBit );
         bool runnable();
         int run();
 };

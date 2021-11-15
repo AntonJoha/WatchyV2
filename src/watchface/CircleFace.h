@@ -4,7 +4,7 @@
 
 class CircleFace : public FaceFrame{
     public:
-        void draw(void * data);
+        void draw();
 };
 
 #endif

@@ -19,7 +19,7 @@ AppFrame * wifiFactory() { return new SetupWifi;}
 
 void addFrames()
 {
-  Watchy::addApp("Set Time", setTimeFactory);
+  //Watchy::addApp("Set Time", setTimeFactory);
   Watchy::addApp("Check Battery", batteryFactory);
   Watchy::addApp("Show buzz", showBuzzFactory);
   Watchy::addApp("Wifi setup", wifiFactory);

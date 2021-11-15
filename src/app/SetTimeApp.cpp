@@ -3,11 +3,11 @@
 
 SetTime::SetTime() {}
 
-void SetTime::draw(void* data) {
+void SetTime::draw() {
     
 }
 
-int SetTime::handleButtonPress(uint64_t wakeupBit, void * data) {
+int SetTime::handleButtonPress(uint64_t wakeupBit) {
     return MAIN_MENU_STATE;
 }
 

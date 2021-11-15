@@ -3,7 +3,7 @@
 #include "../Watchy.h"
 
 
-void BatteryApp::draw(void *data)
+void BatteryApp::draw()
 {
     auto display = Watchy::getDisplay();
 
@@ -23,7 +23,7 @@ void BatteryApp::draw(void *data)
 
 }
         
-int BatteryApp::handleButtonPress(uint64_t wakeupBit, void* data)
+int BatteryApp::handleButtonPress(uint64_t wakeupBit)
 {
     if (wakeupBit & BACK_BTN_MASK) return MAIN_MENU_STATE;
     else return APP_STATE;
@@ -32,7 +32,7 @@ int BatteryApp::handleButtonPress(uint64_t wakeupBit, void* data)
 BatteryApp::BatteryApp() {}
 
 int BatteryApp::run() {
-    draw(nullptr);
+    draw();
     return MAIN_MENU_STATE;
 }
 

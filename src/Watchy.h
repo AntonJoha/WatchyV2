@@ -47,6 +47,10 @@ namespace Watchy {
         void _configModeCallback(WiFiManager *myWiFiManager);
         uint16_t _readRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
         uint16_t _writeRegister(uint8_t address, uint8_t reg, uint8_t *data, uint16_t len);
+
+	void fetchMemory(void * dest, size_t size);
+	void uploadData(void * source, size_t size);
+	bool allowedSize(size_t size);
 }
 
 extern FaceFrame *face;

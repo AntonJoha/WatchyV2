@@ -12,18 +12,18 @@ typedef struct MenuList{
 
 class AppMenu{
     public:
-        void draw(void * data);
-        int handleButtonPress(uint64_t wakeupBit, void * data);
+        void draw();
+        int handleButtonPress(uint64_t wakeupBit);
         AppMenu();
         ~AppMenu();
         void addApp(const char * name, AppFrame*(*factory)(void));
-        int apphandleButtonPress(uint64_t wakeupBit, void * data);
-        void appDraw(void * data);
+        int apphandleButtonPress(uint64_t wakeupBit);
+        void appDraw();
         MenuList* head;
         AppFrame* frame;
 
     private:
-        int fastMenu(void *);
+        int fastMenu();
         int menuButton();
         void downButton();
         void upButton();

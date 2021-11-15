@@ -7,8 +7,8 @@
 class AppFrame{
 
     public:
-        virtual void draw(void * data) = 0;
-        virtual int handleButtonPress(uint64_t wakeupBit, void * data) = 0;
+        virtual void draw() = 0;
+        virtual int handleButtonPress(uint64_t wakeupBit) = 0;
         AppFrame();
         virtual bool runnable() = 0;
         virtual int run() = 0;

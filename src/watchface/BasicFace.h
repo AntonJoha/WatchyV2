@@ -4,7 +4,7 @@
 
 class BasicFace : public FaceFrame{
     public:
-        void draw(void* data);
+        void draw();
 };
 
 

@@ -4,8 +4,8 @@
 
 class BatteryApp : public AppFrame{
     public:
-        void draw(void *data);
-        int handleButtonPress(uint64_t wakeupBit, void* data);
+        void draw();
+        int handleButtonPress(uint64_t wakeupBit);
         BatteryApp();
         bool runnable();
         int run();

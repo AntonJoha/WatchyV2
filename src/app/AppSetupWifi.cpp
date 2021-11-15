@@ -1,14 +1,14 @@
 #include "AppSetupWifi.h"
 #include "../Watchy.h"
 
-void SetupWifi::draw(void * data)
+void SetupWifi::draw()
 {
     return;
 }
 
 bool SetupWifi::runnable() {return true;}
 
-int SetupWifi::handleButtonPress(uint64_t wakeupBit, void * data)
+int SetupWifi::handleButtonPress(uint64_t wakeupBit)
 {
     return MAIN_MENU_STATE;
 }
