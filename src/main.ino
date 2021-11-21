@@ -4,7 +4,7 @@
 #include "app/AppShowBuzz.h"
 #include "app/AppSetupWifi.h"
 #include "watchface/CircleFace.h"
-
+#include "networktest/Network.h"
 
 AppFrame* setTimeFactory()
 {
@@ -19,7 +19,7 @@ AppFrame * wifiFactory() { return new SetupWifi;}
 
 void addFrames()
 {
-  //Watchy::addApp("Set Time", setTimeFactory);
+  Watchy::addApp("Set Time", setTimeFactory);
   Watchy::addApp("Check Battery", batteryFactory);
   Watchy::addApp("Show buzz", showBuzzFactory);
   Watchy::addApp("Wifi setup", wifiFactory);
@@ -28,10 +28,13 @@ void addFrames()
 
 void setup(){
   
-  addFrames();
-  Watchy::setFace(new CircleFace);
+ 	addFrames();
+ 	Watchy::setFace(new CircleFace);
   
-  Watchy::init();
+ 	//Specific to test the network
+	//Watchy::init();
+	Network n;
+	n.handleNetwork(null, null);
 }
 
 void loop(){}

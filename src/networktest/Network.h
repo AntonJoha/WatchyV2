@@ -1,8 +1,11 @@
-#include "WiFI.h"
+#ifndef NETWORK_H
+#define NETWORK_H
 
 class Network{
 
 public:
-	static void handleNetwork(char * (*webpage)(void), void (*handleResponse)(char *));
+	void handleNetwork(char * (*webpage)(void), void (*handleResponse)(char *));
 
 };
+
+#endif
