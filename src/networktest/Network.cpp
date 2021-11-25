@@ -1,9 +1,11 @@
-#include "WiFi.h"
+#include <WiFi.h>
 #include "../config.h"
+#include "Network.h"
+
 
 WiFiServer server(80);
 
-static void Network::handleNetwork(char * (*webpage)(void), void (*handleResponse)(char *)){
+void Network::handleNetwork(char * (*webpage)(void), void (*handleResponse)(char *)){
 
 	WiFi.mode(WIFI_AP);
 
@@ -25,7 +27,6 @@ static void Network::handleNetwork(char * (*webpage)(void), void (*handleRespons
 			if (c == '\n')
 			{
 				
-				if (currentLine.length() == 0)
 
 
 			}
