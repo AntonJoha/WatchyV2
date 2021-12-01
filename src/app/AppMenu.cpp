@@ -169,8 +169,11 @@ void AppMenu::downButton(){
 int AppMenu::menuButton(){
     MenuList * item = getPos(position, head);
     AppFrame *frame = item->factory();
-    if (frame->runnable() == true)
-        return frame->run();
+    if (frame->runnable() == true){
+		int state = frame->run();
+		if (state == MAIN_MENU_STATE) draw();
+		return state;
+	}
 	frame->draw();
     return APP_STATE;
 }
