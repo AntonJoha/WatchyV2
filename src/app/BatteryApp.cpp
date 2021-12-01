@@ -18,7 +18,7 @@ void BatteryApp::draw()
     display->setCursor(70, 80);
     display->print(voltage);
     display->println("VB");
-    display->display(false); //full refresh
+    display->display(true); //full refresh
     display->hibernate();
 
 }
@@ -33,7 +33,8 @@ BatteryApp::BatteryApp() {}
 
 int BatteryApp::run() {
     draw();
-    return MAIN_MENU_STATE;
+    return APP_STATE;
 }
+
 
 bool BatteryApp::runnable() {return false;}

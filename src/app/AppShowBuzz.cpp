@@ -24,7 +24,7 @@ int ShowBuzz::run(){
     display->display(false); //full refresh
     display->hibernate();
     Watchy::vibMotor();
-    return MAIN_MENU_STATE;
+    return APP_STATE;
 }
 
 bool ShowBuzz::runnable() {return true;}

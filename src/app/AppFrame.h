@@ -14,8 +14,4 @@ class AppFrame{
         virtual int run() = 0;
 };
 
-
-
-
-
 #endif

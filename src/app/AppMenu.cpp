@@ -171,6 +171,7 @@ int AppMenu::menuButton(){
     AppFrame *frame = item->factory();
     if (frame->runnable() == true)
         return frame->run();
+	frame->draw();
     return APP_STATE;
 }
 
@@ -211,5 +212,9 @@ void AppMenu::appDraw()
 
 int AppMenu::apphandleButtonPress(uint64_t wakeupBit)
 {
-    return frame->handleButtonPress(wakeupBit);
+	MenuList* item = getPos(position, head);
+	frame = item->factory();
+    int state = frame->handleButtonPress(wakeupBit);
+	if (state == MAIN_MENU_STATE) draw();
+	return state;
 }

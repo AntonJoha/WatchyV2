@@ -187,12 +187,10 @@ void Watchy::handleButtonPress(){
     if (guiState == MAIN_MENU_STATE){
         guiState = menu.handleButtonPress(wakeupBit);
         if (guiState == WATCHFACE_STATE) {showWatchFace(false);}
-        else if (guiState == MAIN_MENU_STATE) {showMenu(menuIndex, false);}
     }
     else if (guiState == APP_STATE)
     {
-        guiState = menu.handleButtonPress(wakeupBit);
-        if (guiState == MAIN_MENU_STATE) {showMenu(menuIndex, false);}
+        guiState = menu.apphandleButtonPress(wakeupBit);
     }
     else if(guiState == WATCHFACE_STATE){//enter menu state if coming from watch face
         guiState = face->handleButtonPress(wakeupBit);
@@ -201,8 +199,6 @@ void Watchy::handleButtonPress(){
             showMenu(menuIndex, false);
         }
     }
-
-  display.hibernate();    
 }
 
 void Watchy::showMenu(byte menuIndex, bool partialRefresh){
