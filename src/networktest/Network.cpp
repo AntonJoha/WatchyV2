@@ -4,9 +4,8 @@
 #include "../Watchy.h"	
 WiFiServer server(80);
 
-void handleClient(WiFiClient
 
-void handleClient(WiFiClient client, char * (*webpage)(void), void (*handleResponse)(char *)
+void handleClient(WiFiClient client, char * (*webpage)(void), void (*handleResponse)(char *))
 {
 	
 }
@@ -34,18 +33,16 @@ void Network::handleNetwork(char * (*webpage)(void), void (*handleResponse)(char
 	while (true)
 	{
 		WiFiClient client = server.available();
-
 		while (client.connected())
 		{
-			handleClient(client, handleResponse, webpage);
+			
 			client.println("HTTP/1.1 200 OK");
 			client.println("Content-type:text/html");
 			client.println("Connection: close");
+			client.println("Content-length: 4");
 			client.println();
 			client.println("test");
 			client.println();
-			
-			client.stop();
 		}
 
 	}
