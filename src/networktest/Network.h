@@ -4,7 +4,7 @@
 class Network{
 
 public:
-	void handleNetwork(char * (*webpage)(void), void (*handleResponse)(char *));
+	void handleNetwork(const char * (*webpage)(void), void (*handleResponse)(char *));
 
 };
 
